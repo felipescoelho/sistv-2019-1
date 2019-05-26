@@ -1,0 +1,275 @@
+\documentclass[11pt]{article}
+
+%4pp das transps
+% psnup -W415 -H273 -s.9 -b10 -d10 -c -4 05-Tecnicas_Compressao_Imagens.ps 05-Tecnicas_Compressao_Imagens.4pp.ps
+
+\usepackage[ansinew]{inputenc} % PARA USAR PALAVRAS EM PORT
+\usepackage[portuguese]{babel}
+\usepackage{a4wide}
+\usepackage{color}
+\usepackage{colordvi}
+\usepackage{epsf,epsfig}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+
+\begin{document} 
+
+\title{Lista de Exercícios de Sistemas de TV -- 2019-1}
+\author{Luiz Felipe da S. Coelho \\ lfscoelho@ieee.org \\ DETEL -- UERJ \\ Departamento de Engenharia Eletrônica e Telecomunicações \\ Universidade do Estado do Rio de Janeiro}
+
+\maketitle
+
+
+\section{Informação de Cor}
+
+\textbf{Objetivo:} O principal objetivo das atividades desta seção é verificar empiricamente os aspectos dos sistema psico-visual humano no que se refere à percepção de cor. Temos ainda como objetivos a fixação do conceito e o uso de histogramas bem como o emprego de filtros bidimensionais. O secundário é expandir os conhecimentos sobre manipulação de matrizes e exibição de imagens usando o \textsf{Matlab}.
+
+\subsection{Espaços de Cores}
+
+\begin{enumerate}
+
+\item \textbf{Tarefa:} Para cada uma das imagens CAPE, MANDRILL, CLOWN e TREES (que vão anexas), fazer o seguinte:
+
+\begin{enumerate}
+\item Carregá-la e visualizá-la,
+\item Transformá-la de RGB para YIQ e YCbCr,
+\item Mostre as matrizes de R, G e B juntamente com as de Y, I e Q e as de Y, Cb e Cr, como se cada uma fosse uma imagem separada em níveis de cinza.
+\end{enumerate}
+
+\begin{itemize}
+
+\item[\textit{Dica}:] Há diferentes versões de fórmulas de conversão de RGB para YCbCr e de volta, veja que as fórmulas das recomendações ITU-R BT.601 (vídeo SD) e ITU-R BT.709 (vídeo HD), use os propostos na última.    
+\item[\textit{Dica}:] Use o comando \textsf{subplot} para mostrar as imagens numa mesma figura. 
+\item[\textit{Dica}:] Note que os elementos de I e Q podem assumir valores negativos -- assim, faça a ``renormalização necessária'', veja o comando \textsf{imgesc}. 
+\end{itemize}
+
+% ----------------------------------------------------------------------------
+% 							FIGURAS TAREFA 1:
+% ----------------------------------------------------------------------------
+% cape -----------------------------------
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/cape_rgb.eps}
+	\caption{Imagem cape.tif, dividia em níveis RGB, juntamente com a imagem original.}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/cape_yiq.eps}
+	\caption{Imagem cape.tif, dividia em níveis YIQ.}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/cape_ycbcr.eps}
+	\caption{Imagem cape.tif, dividia em níveis YCbCr.}
+\end{figure}
+% Mandrill -------------------------------
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/mandrill_rgb.eps}
+	\caption{Imagem mandrill.tif, dividia em níveis RGB, juntamente com a imagem original.}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/mandrill_yiq.eps}
+	\caption{Imagem mandrill.tif, dividia em níveis YIQ.}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/mandrill_ycbcr.eps}
+	\caption{Imagem mandrill.tif, dividia em níveis YCbCr.}
+\end{figure}
+% Clown ------------------------------------
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/clown_rgb.eps}
+	\caption{Imagem clown.tif, dividia em níveis RGB, juntamente com a imagem original.}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/clown_yiq.eps}
+	\caption{Imagem clown.tif, dividia em níveis YIQ.}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/clown_ycbcr.eps}
+	\caption{Imagem clown.tif, dividia em níveis YCbCr.}
+\end{figure}
+% Trees ---------------------------------
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/trees_rgb.eps}
+	\caption{Imagem trees.tif, dividia em níveis RGB, juntamente com a imagem original.}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/trees_yiq.eps}
+	\caption{Imagem trees.tif, dividia em níveis YIQ.}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/trees_ycbcr.eps}
+	\caption{Imagem trees.tif, dividia em níveis YCbCr.}
+\end{figure}
+\item \textbf{Tarefa:} Apresente uma função que realize essas conversões (RGB$\leftrightarrow$YIQ, RGB$\leftrightarrow$YCbCr, YCbCR$\leftrightarrow$YIQ) recebendo como parâmetro a imagem alvo armazenada como dado volumétrico (isto é, uma matriz $L\times C \times 3$, onde $L$ é a quantidade de linhas da imagem, $C$ é a quantidade de colunas e $3$ se refere às três componentes) o espaço de cores da imagem de entrada e o espaço de cores da imagem de saída; e cuja saída seja a imagem no espaço de cores desejado. 
+\begin{itemize}
+
+\item[\emph{Dica:}] Você deve primeiro fazer esta função e depois realizar a sequência de passos acima e as análises relevantes.
+\end{itemize}
+
+\end{enumerate}
+
+As funções pedias estão no \textit{script} \texttt{imgconvfunc.py}.
+
+\subsection{Resposta do Sistema Visual à Informação de Cor}
+
+\begin{enumerate}
+
+\item \textbf{Tarefa:} Faça uma função que receba uma imagem $I$ e retorne o histograma da luminância da mesma. O histograma de uma variável aleatória é a contagem das aparições / realizações de cada um dos valores que a variável pode assumir. Em nosso caso, isso pode ser representado por dois vetores $X$ e $Q$, onde $X$ indica os valores que as luminâncias dos pixeis de $I$ podem assumir e $Q$ é a frequência ou quantidade de ocorrências de cada um dos valores de $X$ em $I$. 
+\begin{itemize}
+\item[\textbf{Obs:}] Assuma que a imagem só possui valores inteiros.
+
+\item[\emph{Dica}:] Seja $X$ uma variável aleatória discreta que pode assumir os valores $\{x_0,x_1,x_2,\dots,x_{N-1}\}$, o histograma para um conjunto de realizações ou amostras $K$ dessa variável aleatória é uma tabela que indica quantas ocorrências de cada um dos $N$ valores que $X$ pode assumir há nas $K$ ocorrências. Isto é, o histograma fornece a frequência relativa dos possíveis valores da variável aleatória $X$.
+
+~\\
+
+Seja $X$ um vetor de comprimento $K$, teremos 
+\begin{equation}
+\textrm{histograma}_X(x_i) = \# \{X==x_i\}, 
+\end{equation}
+onde $\#\{\cdot\}$ indica a quantidade, e $==$ é um operador lógico que indica igualdade.
+
+\item[\textit{Dica}:] Para encontrar as ocorrências de um dado valor $x_i$ em uma imagem $I$ no MatLab pdemos usar o comando \textsf{find}, seguido da contagem dos elementos encontrados usando a função \textsf{size}.
+\end{itemize}
+
+A função que realiza o histogram desejado está no \textit{script} \texttt{funcs32.py}.
+
+\item \textbf{Pergunta:} O \textsf{Matlab} fornece o comando \textsf{hist} para computar um histograma. Qualquer dúvida use o ``help'' do \textsf{Matlab}, por exemplo, via \textsf{help hist}. Compare as diferenças entre essa função e a que você implementou no item acima.
+
+A diferença principal entre os dois algoritmos é que o histograma realizado por no item acima assume que a imagem possui apenas valores inteiros e realiza o histograma para todos os valores possíveis. Enquanto que o comando \textsf{hist} do \textsf{Matlab} realiza o histograma para apenas 10 níveis.
+
+\item \textbf{Tarefa:} Podemos realizar histogramas de qualquer variável. Assim, compute os histogramas das componentes dos espaços de cores RGB, YIQ, e YCbCr  (considerando 256 níveis) para cada uma das imagens aqui consideradas e a partir desses histogramas calcule a entropia das diferentes componentes nos diferentes espaços de cores.
+
+O \textit{script} \texttt{funcs32.py} contém a função que realiza o cálculo de entropia, baseado no histograma calculado.
+
+\item \textbf{Pergunta:} O que você observa a partir dos histogramas acima? Explique.
+
+As imagens têm predominantemente termos em uma mesma faixa do histogram, os termos são, em sua maioria, distribuídos em um ou dois valores.
+
+\item \textbf{Pergunta:} Comparando a entropia das diferentes imagens nos diferentes espaços de cores, o que você conclui? Discuta as vantagens e desvantagens de cada representação / espaço de cores em função da origem / tipo da imagens e suas necessidades de transmissão e armazenamento.
+
+Os espaços de cores possuem diferentes valores de entropia. As informações RGB estão mais distribuídas entre os níveis de cores, ou seja, a entropia muda de acordo com as cores da imagem (por exemplo \texttt{clown.tif} possui mais entropia em R, enquanto que \texttt{cape.tif} possui mais informações em B). Já os espaços YIQ e YCbCr possuem maior entropia no espaço Y.
+
+A entropia indica a quantidade de informação que a imagem carrega, portanto em uma necessidade de transmissão do caso RGB os espaços de cores têm importância equivalente, enquanto que os casos YIQ e YCbCr apresentam maior importância no espaço Y.
+
+\end{enumerate}
+
+\subsection{Visualização de Espaços de Cores}
+
+\begin{enumerate}
+
+\item \textbf{Tarefa:} Gere três matrizes R, G e B (de 512 colunas por 100 linhas) com valores variando linearmente entre 0 e 255 com passo 1.
+
+\item \textbf{Tarefa:} Utilize-as para tentar visualizar a faixa de cores que o monitor é capaz de representar de cada uma das cores R, G e B, isto é separadamente.
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/RGB.eps}
+	\caption{Niveis R, G e B divididos com as cores para 8-bits}
+\end{figure}
+
+\item \textbf{Pergunta:} Explique de que forma você realizou a tarefa acima!
+
+Para realizar esta tarefa, dividi o os espaços de cores em imagens R, G e B de maneira que o arranjo R possua valores não nulos apenas na matriz equivalente aos tons de vermelho, fiz o equivalente para os arranjos G e B.
+
+\item \textbf{Pergunta:} Se ajustarmos algum parâmetro do monitor, a faixa de cores visualizável pode se alterar? Qual parâmetro? Como se dá essa mudança? Explique e Justifique!
+
+Sim. Se alterarmos o parâmetro matriz do monitor alteramos a faixa de cores que o monitor é capaz de representar.
+
+\item \textbf{Tarefa:} Faça o mesmo nos espaços YIQ e YCbCr. Considerando Y=128 (isto é um nível de luminância médio) apresente as faixas de cores que as componentes podem assumir nos diferentes espaços de I e Q, e Cb e Cr.
+
+\item[\textit{Dica}:] Considere o plano IQ (ou CbCr), para cada par ordenado (I,Q) podemos encontrar a cor definida por (Y=128,I,Q) ( ou (Y=128,Cb,Cr)) em RGB. Podemos fazer isso para todos os pontos do plano. Assim teremos para cada pixel o valor RGB da cor. Podemos assim plotar o plano com as cores definidas pelas coordenadas usadas nas ordenadas e abcissas. Repare que isto é um corte no nível Y=128 no cubo de cor.
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/YIQ.eps}
+	\caption{Cortes em Y=128, para I variando nos 8-bits, Q também variando nos 8-bits e Y representa I e Q variando nos 8-bits juntos. As matrizes foram convertidas para o formato RGB para poderem representar as cores que cada nível é capaz de produzir.}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/YCbCr.eps}
+	\caption{Cortes em Y=128, para Cb variando nos 8-bits, Cr também variando nos 8-bits e Y representa Cb e Cr variando nos 8-bits juntos. As matrizes foram convertidas para o formato RGB para poderem representar as cores que cada nível é capaz de produzir.}
+\end{figure}
+
+\item \textbf{Pergunta:} Ajustando os parâmetros do monitor há alterações visíveis? Quais? Como? Explique e Justifique!
+
+Sim, se ajustarmos os mesmos parâmetros que antes do monitor as cores se alteram. O monitor deixa de ser capaz de produzir certas cores e por isso as cores das barras se alteram.
+
+\end{enumerate}
+
+\subsection{Subamostragem de Cor}
+
+\begin{enumerate}
+
+\item \textbf{Tarefa:} Considere as imagens do item anterior. \label{subamost_cor}
+ 
+\begin{enumerate}
+
+\item Converta-as para YCbCr.
+
+\item Reduza as ``resoluções'' horizontais e verticais da luminância Y. Para isso, passe antes um filtro de média pela componente Y. Isto é, convolua-a com a matriz 
+\begin{equation}
+\textsf{Filtro} = \left [ \begin{matrix} 1/9 & 1/9 & 1/9 \\ 1/9 & 1/9 & 1/9 \\1/9 & 1/9 & 1/9  \end{matrix} \right ] \label{eq:filtro}
+\end{equation}
+sendo a origem o elemento central. O MatLab disponibiliza a função \textsf{conv2} para realizar convoluções bidimensionais.
+
+\item Gere as imagens coloridas resultantes com a luminância Y filtrada.
+
+\item Faça o mesmo com as componentes de cor Cb e Cr.
+
+\item Para cada uma das quatro imagens originais, apresente as imagens resultantes a partir das duas filtragens acima.
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/yfilt.eps}
+	\caption{Imagens referentes a filtragem de Y.}
+	\label{fig:filty}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/cbfilt.eps}
+	\caption{Imagens referentes a filtragem de Cb.}
+	\label{fig:filtcb}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=\linewidth]{../imgs/crfilt.eps}
+	\caption{Imagens referentes a filtragem de Cr.}
+	\label{fig:filtcr}
+\end{figure}
+
+
+\end{enumerate}
+
+\item \textbf{Pergunta:} Explique o que faz o filtro definido na equação (\ref{eq:filtro}).
+
+O filtro faz a varredura dos elementos de cada nível de cor, divide por 9 e os soma; é como um filtro de média bidimensional, eleminando grandes variações entre elementos próximos.
+
+\item \textbf{Pergunta:} Comente os resultados observados no item \ref{subamost_cor} e explique-os.
+
+O filtro reduziu grandes variações entre os valores de Y para o caso da Figura \ref{fig:filty}, tornando as cores com uma tonalidade média levemente rosada. Já para os elementos de Cb, como vemos na Figura \ref{fig:filtcb}, os elementos foram todos levados a um tom mais azulado. Enquanto que para os elementos de Cr, observado na Figura \ref{fig:filtcr}, os tons da matriz Cr levaram as imagens a tons mais fortemente rosados.
+
+\end{enumerate}
+
+\end{document}
