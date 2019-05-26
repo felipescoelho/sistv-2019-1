@@ -1,0 +1,56 @@
+\documentclass[11pt]{article}
+
+%4pp das transps
+% psnup -W415 -H273 -s.9 -b10 -d10 -c -4 05-Tecnicas_Compressao_Imagens.ps 05-Tecnicas_Compressao_Imagens.4pp.ps
+
+\usepackage[utf8]{inputenc} % PARA USAR PALAVRAS EM PORT
+%\usepackage[portuguese]{babel}
+\usepackage{a4wide}
+\usepackage{color}
+\usepackage{colordvi}
+\usepackage{epsf,epsfig}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+
+\begin{document} 
+
+\title{Lista de Exercícios de Sistemas de TV -- 2019-1}
+\author{Lisandro Lovisolo \\ lisandro@uerj.br \\ PROSAICO -- DETEL -- UERJ \\ \begin{small} Laboratório de Processamento de Sinais, Aplicações Inteligentes e Comunicações \end{small} \\ Departamento de Engenharia Eletrônica e Telecomunicações \\ Universidade do Estado do Rio de Janeiro}
+
+\maketitle
+
+\section{Codificação de Áudio}
+
+\textbf{Objetivo:} Avaliar empiricamente diferentes estratégias de codificação de áudio comparando a qualidade percebida do áudio, a forma de onda e as taxas.
+
+\subsection{Avaliação de Codificadores de Áudio} 
+
+\begin{enumerate}
+
+\item \textbf{Tarefa:} Usando \emph{softwares} disponíveis na Internet, codifique e decodifique sinais de áudio (música) e de voz usando um codificador MP3 e outro de forma de onda (qualquer variante de ADPCM), em cada um deles use uma taxa alta e outra baixa. 
+
+\item \textbf{Tarefa:} Compare janelas dos sinais decodificados e do original. O que você observa. As formas de onda são iguas? 
+
+\begin{itemize}
+\item[\textit{Dica}:] Tome cuidado pois em geral codificadores MP3 geram um atraso, inserindo assim amostras não significativas do sinal codificado no início do sinal.
+\end{itemize}
+
+\item \textbf{Tarefa:} Descreva e explique os testes realizados e os resultados observados. 
+
+\end{enumerate}
+
+\subsection{Codificação de Somas de Tons}
+
+\begin{enumerate}
+\item \textbf{Tarefa:} Empregue a metodologia acima e codifique somas de tons onde ocorrem e não ocorrem mascaramento, conforme estudado na Seçao 12. 
+
+\item \textbf{Tarefa:} Discuta os resultados observados.
+ 
+\end{enumerate}
+\end{document}
+
+
+
+
+
