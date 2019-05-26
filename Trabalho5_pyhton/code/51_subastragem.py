@@ -11,7 +11,7 @@ from funcs5 import subamostragem as sb
 
 if __name__ == "__main__":
     # 1. Tarefa:
-    zelda_s = plt.imread('imgs/zelda_s.tif')
+    zelda_s = plt.imread('../imgs/zelda_s.tif')
     lx, ly = zelda_s.shape
     dpi = 80.3
     lx_in = float(lx)/dpi
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     zld.imshow(zelda_s, cmap='gray')
     zld.axis('off')
     plt.subplots_adjust(wspace=0, hspace=0, top=1, right=1, bottom=0, left=0)
-    plt.savefig('imgs/zelda.eps', bbox_inches='tight', pad_inches=0)
+    plt.savefig('../imgs/zelda.eps', bbox_inches='tight', pad_inches=0)
     # plt.show()
 
     # 2. Tarefa:
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     sub.imshow(zelda_aux, cmap='gray')
     sub.axis('off')
     plt.subplots_adjust(wspace=0, hspace=0, top=1, right=1, bottom=0, left=0)
-    plt.savefig('imgs/zelda_sub.eps', bbox_inches='tight', pad_inches=0)
+    plt.savefig('../imgs/zelda_sub.eps', bbox_inches='tight', pad_inches=0)
 
     # 4. Tarefa:
     r = 32
@@ -71,5 +71,5 @@ if __name__ == "__main__":
     sb32.imshow(zelda_sb32, cmap='gray')
     sb32.axis('off')
     sb32.set_title('r = 32')
-    plt.savefig('imgs/zelda_subs.eps')
+    plt.savefig('../imgs/zelda_subs.eps')
     plt.show()

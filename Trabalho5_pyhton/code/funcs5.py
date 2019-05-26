@@ -16,6 +16,7 @@ def subamostragem(imagem, r):
            r the downsampling factor
            imagem_sub a single matrix containing imagem downsampled
     """
+
     lx, ly = imagem.shape
     imagem_sub = zeros([int(lx/r), int(ly/r)])
     for i in arange(r-1, lx, r):
@@ -33,6 +34,7 @@ def subamost_media(imagem, r):
            r the downsampling factor
            img_sub_mean is the resulting matrix.
     """
+    
     lx, ly = imagem.shape
     img_sub_mean = zeros([int(lx/r), int(ly/r)])
     img_aux = zeros([r, r])
