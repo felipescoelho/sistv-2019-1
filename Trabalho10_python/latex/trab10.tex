@@ -1,0 +1,56 @@
+\documentclass[11pt]{article}
+
+%4pp das transps
+% psnup -W415 -H273 -s.9 -b10 -d10 -c -4 05-Tecnicas_Compressao_Imagens.ps 05-Tecnicas_Compressao_Imagens.4pp.ps
+
+\usepackage[utf8]{inputenc} % PARA USAR PALAVRAS EM PORT
+%\usepackage[portuguese]{babel}
+\usepackage{a4wide}
+\usepackage{color}
+\usepackage{colordvi}
+\usepackage{epsf,epsfig}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+
+\begin{document} 
+
+\title{Lista de Exercícios de Sistemas de TV -- 2019-1}
+\author{Lisandro Lovisolo \\ lisandro@uerj.br \\ PROSAICO -- DETEL -- UERJ \\ \begin{small} Laboratório de Processamento de Sinais, Aplicações Inteligentes e Comunicações \end{small} \\ Departamento de Engenharia Eletrônica e Telecomunicações \\ Universidade do Estado do Rio de Janeiro}
+
+\maketitle
+
+
+
+\section{Mascaramento de Áudio}
+
+\textbf{Objetivo:} Avaliar empiricamente o mascaramento de áudio, e desenvolver capacidades de implementação de funções e uso de comparações na escala de decibéis. Objetivamos ainda avaliar nossa capacidade auditiva. 
+
+\subsection{Mascaramento Simples}
+
+\begin{enumerate}
+\item \textbf{Tarefa:} Faça um programa \textsf{MatLab} que some dois tons de áudio. Isto é, gere dois sinais $A_1 \cos(2\pi f_1) + A_2 \cos(2\pi f_2)$, sendo $f_i$ e $A_i$ parâmetros de entrada da função e que toque (no alto-falante) esse sinal.   
+
+\item \textbf{Tarefa:} Explique o raciocínio e os testes realizados para a consecução exitosa da tarefa acima.
+
+\item \textbf{Tarefa:} Utilize essa função para avaliar o mascaramento auditivo de um tom de 800Hz por outro de 1000Hz.
+
+\item \textbf{Tarefa:} Discuta o resultado obtido. Compare as potências dos sinais resultantes na saída. Avalie as potência usando db. 
+\end{enumerate}
+
+\subsection{Mascaramento em Função da Frequência}
+
+\begin{enumerate}
+
+\item \textbf{Tarefa:} Utilize a metodologia acima para avaliar o mascaramento auditivo de um tom de $f$ Hz por outro de 1.1 $f$ Hz. Gere um gráfico que apresente a razão mínima entre as potências do sinal de menor frequência sobre o de maior que faz com que o tom de maior frequência esteja mascarado (seja inaudível). Faça isso usando frequências de teste em oitavas (por exemplo, 110, 220, 440, 880, 1760, 3520, etc).
+
+\end{enumerate}
+
+\subsection{Mascaramento de Frequências Relativas}
+
+\begin{enumerate}
+
+\item \textbf{Tarefa:} Utilize a metodologia acima para avaliar o mascaramento auditivo de um tom de $f$ Hz por outro de   $(1+x)f$ Hz, $x\in[-1/2,1/2]$ . Gere um gráfico que apresente a razão mínima entre as potências do sinal de frequência $f$ sobre o de frequência $(1+x)f$ que faz com que o tom de frequência $(1+x)f$ esteja mascarado (seja inaudível). 
+
+\end{enumerate}
+\end{document}
