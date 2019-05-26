@@ -1,0 +1,78 @@
+\documentclass[11pt]{article}
+
+%4pp das transps
+% psnup -W415 -H273 -s.9 -b10 -d10 -c -4 05-Tecnicas_Compressao_Imagens.ps 05-Tecnicas_Compressao_Imagens.4pp.ps
+
+\usepackage[utf8]{inputenc} % PARA USAR PALAVRAS EM PORT
+%\usepackage[portuguese]{babel}
+\usepackage{a4wide}
+\usepackage{color}
+\usepackage{colordvi}
+\usepackage{epsf,epsfig}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+
+\begin{document} 
+
+\title{Lista de Exercícios de Sistemas de TV -- 2019-1}
+\author{Lisandro Lovisolo \\ lisandro@uerj.br \\ PROSAICO -- DETEL -- UERJ \\ \begin{small} Laboratório de Processamento de Sinais, Aplicações Inteligentes e Comunicações \end{small} \\ Departamento de Engenharia Eletrônica e Telecomunicações \\ Universidade do Estado do Rio de Janeiro}
+
+\maketitle
+
+\section{Avaliação Objetiva de Qualidade de Imagens}
+
+\textbf{Objetivo:} O principal objetivo das atividades desta seção é reforçar conhecimentos sobre a avaliação objetiva de vídeo e imagens digitais. O secundário é expandir os conhecimentos sobre manipulação de matrizes e exibição de imagens usando o \textsf{Matlab}.
+
+\subsection{Métricas Tradicionais}
+
+\begin{enumerate}
+
+\item \textbf{Tarefa:} Avalie as diferentes interpolações implementadas no item 6.1.3 em função de métricas de qualidade definidas abaixo. Sejam:
+\begin{align}
+i(c,l) & \textrm{ a luminância do pixel da imagem original na posição } c,l \\
+\hat{i}(c,l) & \textrm{ a luminância do pixel da imagem ''reconstruída'' na posição } c,l \\
+d(c,l) & = i(c,l) - \hat{i}(c,l).
+\end{align}
+Podemos definir as métricas
+\begin{align}
+\textsf{MSAD} & = \frac{1}{CL}\sum_c{\sum_l{ \left | d(c,l) \right |  }}, \\
+\textsf{MSE} & = \frac{1}{CL}\sum_c{\sum_l{ \left | d(c,l) \right |^2  }}, \\
+\textsf{PSNR} & = 10 \log{\left ( \frac{255^2}{\textsf{MSE}} \right )}, 
+\end{align}
+onde $C$ é a quantidade de colunas da imagem e $L$ a quantidade de linhas.
+
+\begin{itemize}
+\item[\textit{Dica}:] Empregue a função \textsf{MatLab} \textsf{mean} para os cálculos das médias consideradas acima. 
+
+\item[\textit{Dica}:] Para realizar as avaliações:
+\begin{enumerate}
+\item Pegue uma imagem de resolução elevada e subamostre-a de 2 e 4 em cada direção (já vimos forma de fazê-lo), assim temos três imagens: $I$ -- a original, $I_2$ -- a subamostrada de 2 e $I_4$  -- a subamostrada de 4. 
+\item Usando o interpoladores desenvolvidos e discutidos em itens anteriores interpole as imagens subamostradas de forma a obter versões interpoladas com as mesmas dimensões da imagem original $I$.
+\end{enumerate}
+\end{itemize}
+
+\item \textbf{Tarefa:} Deixe claro quais os métodos de subamostragem e interpolação empregados.
+
+\item \textbf{Tarefa:} Apesente uma tabela com as métricas de qualidade descritas acima, para as diferentes versões obtidas em resolução original da imagem alvo. 
+
+\item \textbf{Pergunta:} Observando os valores obtidos acima e as qualidades subjetivas observadas (por vocês) nas imagens, podemos afirmar alguma coisa? O que? Explique e justifique.
+
+\end{enumerate}
+
+\subsection{SSIM}
+
+\begin{enumerate}
+
+\item \textbf{Tarefa:} Uma métrica que tem se tornado cada vez mais utilizada para a avaliação da qualidade de imagens e vídeo é o SSIM (\emph{Strcutural Similarity Index Metric}. Documentação e implementação da mesma pode ser encontrada facilmente na internet e %em \textsf{https://ece.uwaterloo.ca/ \~{ }z70wang/research/ssim/}, que 
+segue anexa a este documento. Explique o princípio de funcionamento do SSIM.
+
+\item \textbf{Tarefa:} Repita os experimentos da subseção anterior com a implementação do SSIM disponibilizada. Isto é expanda a tabela acima obtida para incluir o índice de avaliação fornecido pelo SSIM.
+
+\item \textbf{Pergunta:} Observando os valores obtidos acima e as qualidades subjetivas observadas (por vocês) nas imagens, podemos afirmar alguma coisa? O que? Explique e justifique.
+
+\end{enumerate}
+
+\end{document}
+
+
