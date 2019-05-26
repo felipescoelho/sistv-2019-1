@@ -1,0 +1,112 @@
+\documentclass[11pt]{article}
+
+%4pp das transps
+% psnup -W415 -H273 -s.9 -b10 -d10 -c -4 05-Tecnicas_Compressao_Imagens.ps 05-Tecnicas_Compressao_Imagens.4pp.ps
+
+\usepackage[utf8]{inputenc} % PARA USAR PALAVRAS EM PORT
+%\usepackage[portuguese]{babel}
+\usepackage{a4wide}
+\usepackage{color}
+\usepackage{colordvi}
+\usepackage{epsf,epsfig}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+
+\begin{document} 
+
+\title{Lista de Exercícios de Sistemas de TV -- 2019-1}
+\author{Lisandro Lovisolo \\ lisandro@uerj.br \\ PROSAICO -- DETEL -- UERJ \\ \begin{small} Laboratório de Processamento de Sinais, Aplicações Inteligentes e Comunicações \end{small} \\ Departamento de Engenharia Eletrônica e Telecomunicações \\ Universidade do Estado do Rio de Janeiro}
+
+\maketitle
+
+
+
+
+\section{Formatos de TV Digital}
+
+\textbf{Objetivo:} O principal objetivo das atividades desta seção é reforçar conhecimentos sobre os formatos de vídeo digital e as conversões de formatos realizáveis e suas complexidades. O secundário é expandir os conhecimentos sobre manipulação de matrizes e exibição de imagens usando o \textsf{Matlab}.
+
+\subsection{Aspectos Introdutórios}
+
+\begin{enumerate}
+
+\item \textbf{Pergunta:} Os sistemas de TV digital existentes consideram diferentes resoluções, como: 240$\times$320 (LDTV -- 1Seg), 480$\times$720 (SDTV), 720$\times$1280 (HDTV -- progressivo) e 1080$\times$1920 (HDTV -- entrelaçado). Ignorando que há taxas de quadro diferentes e a questão do entrelaçamento ou não, repara-se que essas configurações possuem diferentes razões de aspectos. Faça uma tabela comparativa das razões de aspectos e das quantidades de bits necessárias para armazenamento de um quadro em cada um desses formatos nos espaços de cores RGB e no YCbCr com subamostragem 4:2:2 e 4:2:0, conforme a Tabela \ref{tab:guia-resols} (obs: usamos ``$\#$ bits'' para indicar ``quantidade de bits''.
+
+\begin{table}[h!]
+\centering
+\begin{footnotesize}
+\caption{Tabela guia para a pergunta 7.1.1.} \label{tab:guia-resols}
+\begin{tabular}{|c||c||c|c|c|} \hline
+Formato (L$\times$C) & Razão de aspecto & $\#$ bits RGB & $\#$ bits YCbCr 4:2:2 & $\#$ bits YCbCr 4:2:0 \\ \hline \hline
+240$\times$320 (LDTV 1Seg) & & & & \\ \hline 
+480$\times$720 (SDTV) & & & & \\ \hline
+720$\times$1280 (HDTV ready) & & & & \\ \hline
+1080$\times$1920 (HDTV) & & & & \\ \hline
+2160$\times$3840 (4K) & & & & \\ \hline
+4320$\times$7680 (8K) & & & & \\ \hline
+\end{tabular}
+\end{footnotesize}
+\end{table}
+
+\item \textbf{Pergunta:} Pesquise os modos (entrelaçado ou progressivo) e as taxas de quadros efetivamente empregadas em sistemas de TV digital que empregam as resoluções acima apresentadas. Apresente-os (onde são usados e para que) e faça uma tabela similar à do item anterior considerando essas informações que apresente a taxa que seria necessária para o armazenamento e a transmissão desses vídeos. Isto é, quais as capacidades de canais necessárias à transmissão desses vídeos em formato digital em banda base.
+
+\item \textbf{Pergunta:} Se esses bits são transmitidos usando símbolos que comportam 8 bits quais as taxas de símbolos necessárias.
+
+%\item \textbf{Pergunta:} Se esses vídeos fossem transmitidos com varreduras analógicas equivalentes, quais seriam as larguras de canais necessárias a essas transmissões. 
+
+%\begin{itemize}
+%\item[\textit{Dica}:] Use o que você já desenvolveu na subseção 4.1 para responder esta questão.
+%\end{itemize} 
+
+\item \textbf{Pergunta:} Cabos VGA trafegam sinais de vídeo em diferentes formatos. Pesquise sobre o formato VGA e como os sinais são codificados neles, discutas também as diferentes formas de inserção de sincronismo existentes para cabos VGA.
+
+\item \textbf{Pergunta:}  A Tabela \ref{tab:guia-resols} apresenta um formato 4K e outro 8K. Na verdade há variantes deles. As diferentes ``variantes'' mantêm as quantidades de colunas perto de 4K e 8K, respectivamente. Pesquise, apresente e discuta as diferençãs entre as variantes de vídeos 4K e 8K.
+
+\end{enumerate}
+
+\subsection{Conversão de Formatos -- Redução de Resolução}
+
+\begin{enumerate}
+\item \textbf{Pergunta:} Apresente soluções para as conversões de resoluções das configurações de maior resoluções para as de menores resoluções -- ignore aqui a questão do entrelaçamento ou não, e pense o problema em termos de quadros/imagens. Como você faria a conversão desses modos considerando:
+\begin{enumerate}
+\item[a)] Que deve-se reter a parte central das imagens;
+\item[b)] Manutenção ou não da razão de aspecto;
+\item[c)] O espaço de cores no qual as imagens estão definidas e a subamostragem de cor;
+\item[d)] Que a imagem subamostrada deverá ter seus pixeis retidos com um filtro / máscara de média de pesos constantes (cujas dimensões e pesos dependerão da conversão empregada), de forma a reduzir a influência do \emph{Aliasing}.
+\end{enumerate}
+
+Apresente as considerações, procedimentos e contas necessárias
+
+\item \textbf{Pergunta:} Avalie as complexidades computacionais de cada uma das reduções de resolução.
+
+\item \textbf{Tarefa:} Em função da análise realizada no item acima, faça uma função \textsf{Matlab} que realize essa conversão -- faça isso no formato RGB para facilitar. Esse programa deverá receber como parâmetros: \textbf{i)} O quadro; \textbf{ii)} Se se deve manter a razão de aspecto ou não?; \textbf{iii)} A resolução do quadro alvo (subamostrado) dentre as discutidas neste item; \textbf{iv)} o espaço de cores das imagens. Repare que a função deve realizar as críticas necessárias, pois não consideramos neste item a elevação da resolução mas somente a redução da resolução.
+
+\item \textbf{Tarefa/Pergunta:} Obtenha imagens nas três resoluções mais altas, usando a função desenvolvida obtenha imagens equivalentes nas resoluções inferiores, observe-as e comente os resultados.
+
+\end{enumerate}
+
+\subsection{Conversão de Formatos -- Aumento de Resolução}
+
+\begin{enumerate}
+
+\item \textbf{Pergunta:} Apresente soluções para as conversões de resoluções das configurações de menores resoluções para as de maiores resoluções -- ignore aqui a questão do entrelaçamento ou não e pense o problema em termos de quadros/imagens. Como você faria a conversão desses modos considerando:
+\begin{enumerate}
+\item[a)] Manutenção ou não da razão de aspecto;
+\item[b)] O espaço de cores no qual as imagens estão definidas;
+\item[c)] Que a imagem interpolada deverá ter seus pixeis criados com o interpolador do item 6.3.4 reiteradamente.
+\item[d)] Após a interpolação para uma resolução pouco maior que a desejada, o quadro de resolução desejada será obtida eliminando linhas e colunas excedentes nos lados e no topo e no fundo da imagem de forma a obter o quadro de tamanho desejado.
+\end{enumerate}
+
+Apresente as considerações, procedimentos e contas necessárias.
+
+\item \textbf{Pergunta:} Avalie as complexidades computacionais de cada uma das elevações de resolução.
+
+\item \textbf{Tarefa:} Em função da análise realizada no item acima, faça uma função \textsf{Matlab} que realize essa conversão -- faça isso no formato RGB para facilitar. Esse programa deverá receber como parâmetros: \textbf{i)} O quadro; \textbf{ii)} Se se deve manter a razão de aspecto ou não?; \textbf{iii)} A resolução do quadro alvo (subamostrado) dentre as discutidas neste item; \textbf{iv)} o espaço de cores das imagens. Repare que a função deve realizar as críticas necessárias, pois não consideramos neste item a redução da resolução mas somente a elevação da resolução.
+
+\item \textbf{Tarefa/Pergunta:} Avalie as diferentes conversões obtidas.
+
+\item \textbf{Tarefa:} Na Seção 6, vimos algumas técnicas de interpolação para aumento de resolução. Há diversas outras como o $n$xBRZ e o HQ$n$X -- nos quais $n$ tem a ver com a dimensão, há um bom resumo sobre essas técnicas em \textsf{https://en.wikipedia.org/wiki/Image\_scaling}. Repare que tanto a redução como o aumento de resolução quando de um fator $2n$ ($n \in \mathbb{N}$) é computacionalmente mais simples. Compare as complexidades e os resultados obtidos usando os ``interpoladores'' nxBRZ e o HQnX como os da Seção 7, para obter uma imagem 2K e 4K a partir de uma HD.  
+
+\end{enumerate}
+\end{document}
