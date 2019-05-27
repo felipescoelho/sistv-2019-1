@@ -10,3 +10,4 @@
 import matplotlib.pyplot as plt
 
 img = plt.imread('../imgs/mandrill.tiff')
+
