@@ -6,14 +6,40 @@
 # 5.2. SUBASTRAGEM CONTINUACAO:
 # ----------------------------------------------------------------------------
 import matplotlib.pyplot as plt
-# import numpy as np
 from funcs5 import subamost_media as sbm
+from funcs5 import msk_dwnsp as msksb
 
 if __name__ == "__main__":
     # 1. Tarefa:
-    # using the suggested method
-    zelda_s = plt.imread('imgs/zelda_s.tif')
+    zelda_s = plt.imread('../imgs/zelda_s.tif')
 
+    # using the suggested method
+
+    zelda_msksb4 = msksb(zelda_s, 4)
+    zelda_msksb8 = msksb(zelda_s, 8)
+    zelda_msksb16 = msksb(zelda_s, 16)
+    zelda_msksb32 = msksb(zelda_s, 32)
+
+    plt.figure()
+    sbm4 = plt.subplot(221)
+    sbm4.imshow(zelda_msksb4, cmap='gray')
+    sbm4.axis('off')
+    sbm4.set_title('r = 4')
+    sbm8 = plt.subplot(222)
+    sbm8.imshow(zelda_msksb8, cmap='gray')
+    sbm8.axis('off')
+    sbm8.set_title('r = 8')
+    sbm16 = plt.subplot(223)
+    sbm16.imshow(zelda_msksb16, cmap='gray')
+    sbm16.axis('off')
+    sbm16.set_title('r = 16')
+    sbm32 = plt.subplot(224)
+    sbm32.imshow(zelda_msksb32, cmap='gray')
+    sbm32.axis('off')
+    sbm32.set_title('r = 32')
+    plt.savefig('../imgs/zelda_subsm.eps')
+
+    # using the mean method:
     zelda_sbm4 = sbm(zelda_s, 4)
     zelda_sbm8 = sbm(zelda_s, 8)
     zelda_sbm16 = sbm(zelda_s, 16)
@@ -36,12 +62,5 @@ if __name__ == "__main__":
     sbm32.imshow(zelda_sbm32, cmap='gray')
     sbm32.axis('off')
     sbm32.set_title('r = 32')
-    plt.savefig('imgs/zelda_subsm.eps')
+    plt.savefig('../imgs/zelda_subsm.eps')
     plt.show()
-
-
-    # using the mean method:
-    zelda_sbm4 = sbm(zelda_s, 4)
-    zelda_sbm8 = sbm(zelda_s, 8)
-    zelda_sbm16 = sbm(zelda_s, 16)
-    zelda_sbm32 = sbm(zelda_s, 32)

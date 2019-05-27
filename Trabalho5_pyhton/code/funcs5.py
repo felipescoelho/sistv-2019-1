@@ -23,7 +23,9 @@ def subamostragem(imagem, r):
     for i in np.arange(r-1, lx, r):
         for j in np.arange(r-1, ly, r):
             imagem_sub[int(i/r), int(j/r)] = imagem[i, j]
+
     return imagem_sub
+
 
 def msk_dwnsp(img, r):
     """
@@ -36,8 +38,10 @@ def msk_dwnsp(img, r):
 
     lx, ly = img.shape
     mask = np.ones([int(r), int(r)])
-    img = cv2d(img, mask, bounduary='symm', )
+    img_sub = cv2d(img, mask, boundary='symm') / r**2
+
     return img_sub
+
 
 def subamost_media(imagem, r):
     """
@@ -56,4 +60,5 @@ def subamost_media(imagem, r):
         for j in np.arange(r-1, ly, r):
             img_aux = imagem[i - r/2:i + r/2, j - r/2:j + r/2]
             img_sub_mean[int(i/r), int(j/r)] = img_aux.mean()
+
     return img_sub_mean
