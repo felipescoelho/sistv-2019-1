@@ -37,7 +37,7 @@ if __name__ == "__main__":
     sbm32.imshow(zelda_msksb32, cmap='gray')
     sbm32.axis('off')
     sbm32.set_title('r = 32')
-    plt.savefig('../imgs/zelda_subsm.eps')
+    plt.savefig('../imgs/zelda_mskdwn.eps')
 
     # using the mean method:
     zelda_sbm4 = sbm(zelda_s, 4)
