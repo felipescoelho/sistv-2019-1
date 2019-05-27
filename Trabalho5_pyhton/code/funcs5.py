@@ -1,7 +1,8 @@
 # Aluno: Luiz Felipe da S. Coelho
 # File name: funcs5.py
 # ----------------------------------------------------------------------------
-from numpy import *
+import numpy as np
+from scipy.signal import convolve2d as cv2d
 
 
 if __name__ == "__main__":
@@ -18,12 +19,25 @@ def subamostragem(imagem, r):
     """
 
     lx, ly = imagem.shape
-    imagem_sub = zeros([int(lx/r), int(ly/r)])
-    for i in arange(r-1, lx, r):
-        for j in arange(r-1, ly, r):
+    imagem_sub = np.zeros([int(lx/r), int(ly/r)])
+    for i in np.arange(r-1, lx, r):
+        for j in np.arange(r-1, ly, r):
             imagem_sub[int(i/r), int(j/r)] = imagem[i, j]
     return imagem_sub
 
+def msk_dwnsp(img, r):
+    """
+    Function for downsampling an image by applying a mask.
+    >>>>> img_sub = msk_dwnsp(img, r) <<<<<
+    where, img is an array containing the image's information
+           r is the downsampling factor
+           img_sub is an array containing the downsampled image
+    """
+
+    lx, ly = img.shape
+    mask = np.ones([int(r), int(r)])
+    img = cv2d(img, mask, bounduary='symm', )
+    return img_sub
 
 def subamost_media(imagem, r):
     """
@@ -34,12 +48,12 @@ def subamost_media(imagem, r):
            r the downsampling factor
            img_sub_mean is the resulting matrix.
     """
-    
+
     lx, ly = imagem.shape
-    img_sub_mean = zeros([int(lx/r), int(ly/r)])
-    img_aux = zeros([r, r])
-    for i in arange(r-1, lx, r):
-        for j in arange(r-1, ly, r):
+    img_sub_mean = np.zeros([int(lx/r), int(ly/r)])
+    img_aux = np.zeros([r, r])
+    for i in np.arange(r-1, lx, r):
+        for j in np.arange(r-1, ly, r):
             img_aux = imagem[i - r/2:i + r/2, j - r/2:j + r/2]
             img_sub_mean[int(i/r), int(j/r)] = img_aux.mean()
     return img_sub_mean
