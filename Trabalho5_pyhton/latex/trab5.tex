@@ -119,23 +119,33 @@ a \left (0, \frac{-\!(N\!-\!1)}{2} \right)  & \vdots &  & a(0,0) &  &  \vdots & 
 
 \end{itemize}
 
-A função feita está no \textit{script} \texttt{funcs5.py} e sua implementação é realizada em \texttt{52$\_$contin.py}
+A função feita está no \textit{script} \texttt{funcs5.py} e é definida como \texttt{msk$\_$dwnsp}. Sua implementação é realizada em \texttt{52$\_$contin.py}.
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=1]{../imgs/zelda_subsm.eps}
-	\caption{Quatro imagens de \texttt{zelda$\_$s.tif} subamostradas pelo fato $r = 4,~8,~16 \textrm{ e } 32$ utilizando a média dos pixels.}
+	\includegraphics[scale=1]{../imgs/zelda_mskdwn.eps}
+	\caption{Quatro imagens de \texttt{zelda$\_$s.tif} subamostradas pelo fato $r = 4,~8,~16 \textrm{ e } 32$ utilizando o método de filtragem bidimensional.}
+	\label{fig:mask}
 \end{figure}
 
 \item \textbf{Pergunta:} Apresente e explique as considerações realizadas para a implementação solicitada.
 
-Para esta realização, foi considerado que para uma imagem de dimensões $M \times N$, $M$ e $N$ são divisíveis por $r$, ou seja, na divisão dos blocos não há resto.
+Para esta realização, foi considerada a convolução bidimensional de um arranjo $r \times r$ de uns por uma imagem e em seguida o resultado da convolução foi dividido por $r^2$.
 
-\item \textbf{Pergunta:} Explique / averígue se os pixeis gerados usando a forma sugerida equivalem aos que seriam gerados por uma implementação por cálculo simples da média por soma e divisão. 
+\item \textbf{Pergunta:} Explique / averígue se os pixeis gerados usando a forma sugerida equivalem aos que seriam gerados por uma implementação por cálculo simples da média por soma e divisão.
+
+Como pode ser observado à partir de uma rápida anlálise das Figuras \ref{fig:mask} e \ref{fig:prova}, os resultados abtidos pelo método sugerido e pelo cálculo simples da média por soma e divisão trazem resultados diferentes.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1]{../imgs/zelda_subsm.eps}
+	\caption{Quatro imagens de \texttt{zelda$\_$s.tif} subamostradas pelo fato $r = 4,~8,~16 \textrm{ e } 32$ utilizando o método do cálculo simples da média por soma e divisão.}
+	\label{fig:prova}
+\end{figure}
 
 \item \textbf{Pergunta:} Compare as imagens obtidas com esta nova abordagem com aquelas obtidas com a subamostragem dos itens 5.1.\ref{sub_cor_1} e 5.1.\ref{sub_cor_2} e comente as diferenças entre os procedimentos e as qualidades das imagens subamostradas observadas.
 
-As imagens obtidas nesse procedimento têm transições mais suaves, o que as tornam um pouco mais nítidas que aquelas dos processos anteriores.
+As imagens obtidas nesse procedimento têm transições mais suaves, o que as tornam mais nítidas que aquelas dos processos anteriores. Porém com o aumento do fator de subamostragem as imagens ficam mais embaçadas.
 
 \begin{itemize}
 \item[\textit{Dica}:] A passagem de uma máscara sobre uma imagem pode ser obtida a partir da convolução. O \textsf{Matlab} fornece a função \textsf{conv2} para a convolução bidimensional. 
@@ -156,7 +166,11 @@ Observe que a imagem resultante da convolução de uma imagem de dimensões $M\t
 \begin{itemize}
 \item[a)] Quais transformações deverá sofrer uma máscara de forma a gerar uma matriz $A$ que pode ser convoluída bidimensionalmente com a imagem e obter o mesmo resultado da aplicação da máscara?
 
+Para que o resultado da convolução bidimensional seja do mesmo da aplicação da máscara, a matriz $A$ deverá ser composta de termos $1/r^2$; isto para $A$ com dimensões $r \times r$.
+
 \item[b)] Qual a eliminação de linhas e colunas a ser aplicada à imagem resultante da convolução de forma a obter uma imagem que possua as mesmas dimensões da imagem original, de forma tal que a área da imagem resultante seja o mais próxima possível da área da imagem original?
+
+Para que a imagem resultante tenha a mesma dimensão da imagem original, devemos reduzir as linha e as colunas em $r-1$; isto para $A$ com dimensões $r \times r$.
 \end{itemize}
 \end{itemize}
 

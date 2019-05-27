@@ -38,7 +38,7 @@ def msk_dwnsp(img, r):
 
     lx, ly = img.shape
     mask = np.ones([int(r), int(r)])
-    img_sub = cv2d(img, mask, boundary='symm') / r**2
+    img_sub = cv2d(img, mask, boundary='fill', mode='valid') / r**2
 
     return img_sub
 
