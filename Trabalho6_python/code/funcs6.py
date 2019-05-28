@@ -105,3 +105,30 @@ def bi_interpol(img, r):
     imagem_aux[0:, ly-1] = imagem_aux[0:, ly-2]
     for i in np.arange(2, ly-2, 2):
         imagem_aux[0:, i] = .5*imagem_aux[0:, i-1] + .5*imagem_aux[0:, i+1]
+
+
+def zero_insert(img, r):
+    """
+    Inserts r zeros to the righ of each column and beneath each line.
+    >>>>> img_zero = zero_insert(img, r) <<<<<
+    where, img_zero is the image filled with zeros
+           img is the original image
+           r is the number of zeros between each column/line.
+    """
+
+    lx, ly = img.shape
+    lx2 = r*lx
+    ly2 = r*ly
+    img_zero = np.zeros([lx2, ly2])
+    for i in np.arange(0, lx2, r):
+        for j in np.arange(0, ly2, r):
+            img_zero[i, j] = img[i/r, j/r]
+    return img_zero
+
+def weighted_mean_interpol(img, r):
+    """
+    it makes something
+    """
+
+    if r = 2:
+        img_zero = zero_insert(img, 2)
