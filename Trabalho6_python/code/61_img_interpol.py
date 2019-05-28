@@ -34,7 +34,7 @@ dpi = 80.3
 lx_int2, ly_int2 = img_int2.shape
 lx_int2_inch = float(lx_int2)/dpi
 ly_int2_inch = float(ly_int2)/dpi
-plt.figure(figsize=(lx_int2_inch, ly_int2_inch))
+plt.figure(figsize=(lx_int2_inch, ly_int2_inch), dpi=dpi)
 int2 = plt.subplot(111)
 int2.imshow(img_int2, cmap='gray')
 plt.subplots_adjust(wspace=0, hspace=0, top=1, right=1, bottom=0, left=0)
@@ -44,7 +44,7 @@ int2.axis('off')
 lx_int4, ly_int4 = img_int4.shape
 lx_int4_inch = float(lx_int4)/dpi
 ly_int4_inch = float(ly_int4)/dpi
-plt.figure(figsize=(lx_int4_inch, ly_int4_inch))
+plt.figure(figsize=(lx_int4_inch, ly_int4_inch), dpi=dpi)
 int4 = plt.subplot(111)
 int4.imshow(img_int4, cmap='gray')
 plt.subplots_adjust(wspace=0, hspace=0, top=1, right=1, bottom=0, left=0)
@@ -54,7 +54,7 @@ int4.axis('off')
 lx_int8, ly_int8 = img_int8.shape
 lx_int8_inch = float(lx_int8)/dpi
 ly_int8_inch = float(ly_int8)/dpi
-plt.figure(figsize=(lx_int8_inch, ly_int8_inch))
+plt.figure(figsize=(lx_int8_inch, ly_int8_inch), dpi=dpi)
 int8 = plt.subplot(111)
 int8.imshow(img_int8, cmap='gray')
 plt.subplots_adjust(wspace=0, hspace=0, top=1, right=1, bottom=0, left=0)
