@@ -13,17 +13,21 @@ from funcs6 import zoh_interpol as zoh
 from funcs6 import rgb2ycbcr
 
 img = plt.imread('../imgs/mandrill.tif')
+
 # Converting to YCbCr:
 img_aux = rgb2ycbcr(img)
 img_y = img_aux[0:, 0:, 0]
+
 # downsampling
 img_sb2 = sb(img_y, 2)
 img_sb4 = sb(img_y, 4)
 img_sb8 = sb(img_y, 8)
+
 # interpolation
 img_int2 = zoh(img_sb2, 2)
 img_int4 = zoh(img_sb4, 4)
 img_int8 = zoh(img_sb8, 8)
+
 # plotting
 dpi = 80.3
 # Downsampling factor 2:
