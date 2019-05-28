@@ -80,14 +80,13 @@ def zoh_interpol(img, r):
     return intr_img
 
 
-def bi_interpol(img, r):
+def bi_interpol(img):
     """
     Bilinear interpolation function. It implements a bilinear interpolation
     in a determined image with a determined factor.
-    >>>>> intr_img = bi_interpol(img, r) <<<<<
+    >>>>> intr_img = bi_interpol(img) <<<<<
     where, intr_img is the post-interpolation image
            img      is the image to be interpolated
-           r        is the interpolation factor.
     """
     lx, ly = img.shape
     imagem_aux = np.zeros([lx, ly])
@@ -105,6 +104,8 @@ def bi_interpol(img, r):
     imagem_aux[0:, ly-1] = imagem_aux[0:, ly-2]
     for i in np.arange(2, ly-2, 2):
         imagem_aux[0:, i] = .5*imagem_aux[0:, i-1] + .5*imagem_aux[0:, i+1]
+    intr_img = imagem_aux
+    return intr_img
 
 
 def zero_insert(img, r):
@@ -130,5 +131,22 @@ def weighted_mean_interpol(img, r):
     it makes something
     """
 
-    if r = 2:
+    if r == 2:
         img_zero = zero_insert(img, 2)
+        img_out = bi_interpol(img_zero, 2)
+
+    if r == 4:
+        img_aux1 = zero_insert(img, 2)
+        img_aux2 = bi_interpol(img_aux1)
+        img_aux3 = zero_insert(img_aux2, 2)
+        img_out = bi_interpol(img_aux3)
+
+    if r == 8:
+        img_aux1 = zero_insert(img, 2)
+        img_aux2 = bi_interpol(img_aux1)
+        img_aux3 = zero_insert(img_aux2, 2)
+        img_aux4 = bi_interpol(img_aux3)
+        img_aux5 = zero_insert(img_aux4, 2)
+        img_out = bi_interpol(img_aux5)
+
+    return img_out
