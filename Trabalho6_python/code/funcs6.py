@@ -94,6 +94,8 @@ def bi_interpol(img, par):
     lx, ly = img.shape
 
     if par == 1:
+        img[lx-1, 0:] = img[lx-2, 0:]
+        img[0:, ly-1] = img[0:, ly-2]
         # First the horizontal iterations:
         for i in np.arange(1, lx-1, 2):
             img[i, 0:] = .5*img[i-1, 0:] + .5*img[i+1, 0:]
@@ -101,9 +103,10 @@ def bi_interpol(img, par):
         for i in np.arange(1, ly-1, 2):
             img[0:, i] = .5*img[0:, i-1] + .5*img[0:, i+1]
         intr_img = img
-        # Corners correction:
 
     if par == 2:
+        img[lx-1, 0:] = 3*img[lx-2, 0:]/4 + img[lx-4, 0:]/4
+        img[0:, ly-1] = 3*img[0:, ly-2]/4 + img[0:, ly-4]/4
         # First the horizontal iterations:
         for i in np.arange(3, lx-3, 2):
             img[i, 0:] = (img[i-3, 0:]/8) + (3*img[i-1, 0:]/8) + \
