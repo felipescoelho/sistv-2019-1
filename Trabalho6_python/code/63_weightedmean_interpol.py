@@ -60,7 +60,7 @@ img_z8 = zins(img_sb8, 8)
 # plt_z8.axis('off')
 # plt_z8.set_title('r = 8')
 
-# 3x3 interpolation:
+# a) 3x3 interpolation:
 img_int2 = wmi(img_sb2, 2, 1)
 img_int4 = wmi(img_sb4, 4, 1)
 img_int8 = wmi(img_sb8, 8, 1)
@@ -79,24 +79,24 @@ img_int8 = wmi(img_sb8, 8, 1)
 # plt_int8.axis('off')
 # plt_int8.set_title('r = 8')
 
-# 7x7 interpolation:
+# b) 7x7 interpolation:
 img_int2_7x7 = wmi(img_sb2, 2, 2)
 img_int4_7x7 = wmi(img_sb4, 4, 2)
 img_int8_7x7 = wmi(img_sb8, 8, 2)
 # plotting 7x7 interpolation
-# plt.figure(num='7x7 Interpolation')
-# plt_int2_7x7 = plt.subplot(131)
-# plt_int2_7x7.imshow(img_int2_7x7, cmap='gray')
-# plt_int2_7x7.axis('off')
-# plt_int2_7x7.set_title('r = 2')
-# plt_int4_7x7 = plt.subplot(132)
-# plt_int4_7x7.imshow(img_int4_7x7, cmap='gray')
-# plt_int4_7x7.axis('off')
-# plt_int4_7x7.set_title('r = 4')
-# plt_int8_7x7 = plt.subplot(133)
-# plt_int8_7x7.imshow(img_int8_7x7, cmap='gray')
-# plt_int8_7x7.axis('off')
-# plt_int8_7x7.set_title('r = 8')
-# plt.show()
+plt.figure(num='7x7 Interpolation')
+plt_int2_7x7 = plt.subplot(131)
+plt_int2_7x7.imshow(img_int2_7x7, cmap='gray')
+plt_int2_7x7.axis('off')
+plt_int2_7x7.set_title('r = 2')
+plt_int4_7x7 = plt.subplot(132)
+plt_int4_7x7.imshow(img_int4_7x7, cmap='gray')
+plt_int4_7x7.axis('off')
+plt_int4_7x7.set_title('r = 4')
+plt_int8_7x7 = plt.subplot(133)
+plt_int8_7x7.imshow(img_int8_7x7, cmap='gray')
+plt_int8_7x7.axis('off')
+plt_int8_7x7.set_title('r = 8')
+plt.show()
 
 # 5 - Tarefa:

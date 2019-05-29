@@ -101,6 +101,7 @@ def bi_interpol(img, par):
         for i in np.arange(1, ly-1, 2):
             img[0:, i] = .5*img[0:, i-1] + .5*img[0:, i+1]
         intr_img = img
+        # Corners correction:
 
     if par == 2:
         # First the horizontal iterations:
@@ -131,13 +132,18 @@ def zero_insert(img, r):
     img_zero = np.zeros([lx2, ly2])
     for i in np.arange(0, lx2, r):
         for j in np.arange(0, ly2, r):
-            img_zero[i, j] = img[i/r, j/r]
+            img_zero[i, j] = img[int(i/r), int(j/r)]
     return img_zero
 
 
 def weighted_mean_interpol(img, r, par):
     """
-    it makes something
+    Function for the weighted mean interpolation.
+    >>>>> img_out = weighted_mean_interpol(img, r, par) <<<<<
+    where, img is the input image
+           r is the interpolation factor
+           par is a parameter for the interpolation's window size
+           img_out is the output image
     """
 
     if r == 2:
