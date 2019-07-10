@@ -80,28 +80,91 @@ def zoh_interpol(img, r):
     return intr_img
 
 
-def bi_interpol(img, r):
+def bi_interpol(img, par):
     """
     Bilinear interpolation function. It implements a bilinear interpolation
     in a determined image with a determined factor.
-    >>>>> intr_img = bi_interpol(img, r) <<<<<
+    >>>>> intr_img = bi_interpol(img, par) <<<<<
     where, intr_img is the post-interpolation image
            img      is the image to be interpolated
-           r        is the interpolation factor.
+           par      is a parameter to define wich interpolation is made, if
+                    par = 1 is the 3x3 interpolation and if par = 2 the 7x7
+                    interpolation is made.
     """
     lx, ly = img.shape
-    imagem_aux = np.zeros([lx, ly])
-    for i in np.arange(1, lx, 2):
-        for j in np.arange(1, ly, 2):
-            imagem_aux[i, j] = img[int(i/2), int(j/2)]
-    # Bilinear Interpolation:
-    # First the horizontal iterations:
-    imagem_aux[0, 0:] = imagem_aux[1, 0:]
-    imagem_aux[lx-1, 0:] = imagem_aux[lx-2, 0:]
-    for i in np.arange(2, lx-2, 2):
-        imagem_aux[i, 0:] = .5*imagem_aux[i-1, 0:] + .5*imagem_aux[i+1, 0:]
-    # Now the vertical iterations:
-    imagem_aux[0:, 0] = imagem_aux[0:, 1]
-    imagem_aux[0:, ly-1] = imagem_aux[0:, ly-2]
-    for i in np.arange(2, ly-2, 2):
-        imagem_aux[0:, i] = .5*imagem_aux[0:, i-1] + .5*imagem_aux[0:, i+1]
+
+    if par == 1:
+        img[lx-1, 0:] = img[lx-2, 0:]
+        img[0:, ly-1] = img[0:, ly-2]
+        # First the horizontal iterations:
+        for i in np.arange(1, lx-1, 2):
+            img[i, 0:] = .5*img[i-1, 0:] + .5*img[i+1, 0:]
+        # Now the vertical iterations:
+        for i in np.arange(1, ly-1, 2):
+            img[0:, i] = .5*img[0:, i-1] + .5*img[0:, i+1]
+        intr_img = img
+
+    if par == 2:
+        img[lx-1, 0:] = 3*img[lx-2, 0:]/4 + img[lx-4, 0:]/4
+        img[0:, ly-1] = 3*img[0:, ly-2]/4 + img[0:, ly-4]/4
+        # First the horizontal iterations:
+        for i in np.arange(3, lx-3, 2):
+            img[i, 0:] = (img[i-3, 0:]/8) + (3*img[i-1, 0:]/8) + \
+                        (3*img[i+1, 0:]/8) + (img[i+3, 0:]/8)
+        # Now the vertical iterations:
+        for i in np.arange(3, ly-3, 2):
+            img[0:, i] = (img[0:, i-3]/8) + (3*img[0:, i-1]/8) + \
+                        (3*img[0:, i+1]/8) + (img[0:, i+3]/8)
+        intr_img = img
+
+    return intr_img
+
+
+def zero_insert(img, r):
+    """
+    Inserts r zeros to the righ of each column and beneath each line.
+    >>>>> img_zero = zero_insert(img, r) <<<<<
+    where, img_zero is the image filled with zeros
+           img is the original image
+           r is the number of zeros between each column/line.
+    """
+
+    lx, ly = img.shape
+    lx2 = r*lx
+    ly2 = r*ly
+    img_zero = np.zeros([lx2, ly2])
+    for i in np.arange(0, lx2, r):
+        for j in np.arange(0, ly2, r):
+            img_zero[i, j] = img[int(i/r), int(j/r)]
+    return img_zero
+
+
+def weighted_mean_interpol(img, r, par):
+    """
+    Function for the weighted mean interpolation.
+    >>>>> img_out = weighted_mean_interpol(img, r, par) <<<<<
+    where, img is the input image
+           r is the interpolation factor
+           par is a parameter for the interpolation's window size
+           img_out is the output image
+    """
+
+    if r == 2:
+        img_zero = zero_insert(img, 2)
+        img_out = bi_interpol(img_zero, par)
+
+    if r == 4:
+        img_aux1 = zero_insert(img, 2)
+        img_aux2 = bi_interpol(img_aux1, par)
+        img_aux3 = zero_insert(img_aux2, 2)
+        img_out = bi_interpol(img_aux3, par)
+
+    if r == 8:
+        img_aux1 = zero_insert(img, 2)
+        img_aux2 = bi_interpol(img_aux1, par)
+        img_aux3 = zero_insert(img_aux2, 2)
+        img_aux4 = bi_interpol(img_aux3, par)
+        img_aux5 = zero_insert(img_aux4, 2)
+        img_out = bi_interpol(img_aux5, par)
+
+    return img_out
